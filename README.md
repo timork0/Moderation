@@ -21,8 +21,8 @@ Un bot de Discord profesional que combina funcionalidades de moderación, sistem
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/TU_USUARIO/NOMBRE_REPOSITORIO
-cd NOMBRE_REPOSITORIO
+git clone https://github.com/timork0/Moderation
+cd Moderation
 npm install
 ```
 
@@ -30,32 +30,15 @@ npm install
 
 TOKEN=tu_token_de_discord
 MONGO_DB=tu_uri_de_mongodb
+CLIENT_ID=el_id_del_bot
+GUILD_ID=el_id_de_tu_servidor
+ownerId=tu_id_de_usuario
 
 3. Ejecuta el bot:
 
 ```bash
 npm start
 ```
-
-## 🗂️ Estructura del Proyecto
-
-`src/
-├── commands/       → Comandos disponibles para el bot
-│   ├── ban.js
-│   ├── giveaway.js
-│   ├── mod-user.js
-│   ├── premium.js
-│   ├── premiumcode.js
-│   ├── redeem.js
-│   ├── steal.js
-│   ├── ticket.js
-│   └── warn.js
-├── events/         → Eventos de Discord.js
-├── schemas/        → Modelos de MongoDB
-├── utils/          → Funciones auxiliares
-└── index.js        → Punto de entrada principal
-.env                → Variables de entorno
-package.json        → Dependencias y metadatos del proyecto`
 
 ## 📌 Requisitos
 
