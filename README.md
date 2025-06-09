@@ -29,11 +29,13 @@ npm install
 
 2. Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
+```
 TOKEN=tu_token_de_discord
 MONGO_DB=tu_uri_de_mongodb
 CLIENT_ID=el_id_del_bot
 GUILD_ID=el_id_de_tu_servidor
 ownerId=tu_id_de_usuario
+```
 
 3. Ejecuta el bot:
 
