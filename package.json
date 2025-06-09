@@ -12,10 +12,8 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
     "apexify.js": "^4.9.25",
     "axios": "^1.9.0",
-    "better-sqlite3": "^11.10.0",
     "canvas": "^3.1.0",
     "discord-arts": "^0.7.1",
     "discord-html-transcripts": "^3.2.0",
