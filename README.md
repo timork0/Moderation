@@ -7,6 +7,7 @@ Un bot de Discord profesional que combina funcionalidades de moderación, sistem
 - ⚒️ **Moderación completa**: comandos como `ban`, `warn`, `mod-user`, entre otros.
 - 🎁 **Sistema de premios y economía**: incluye `giveaway`, `steal`, `premium`, `redeem` y `premiumcode`.
 - 🎫 **Sistema de Tickets**: gestión de soporte mediante comandos personalizados.
+- 🚨 **Sistema Anti-Raid**: detección y bloqueo automático de ataques en masa.
 - 💌 **Modmail**: canal privado de comunicación entre miembros y staff.
 - 📦 **Sistema Premium**: funcionalidad exclusiva mediante códigos canjeables.
 - 📋 **Sistema de Logs Profesional**: seguimiento detallado de acciones administrativas.
