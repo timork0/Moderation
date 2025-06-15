@@ -36,6 +36,9 @@ MONGO_DB=tu_uri_de_mongodb
 CLIENT_ID=el_id_del_bot
 GUILD_ID=el_id_de_tu_servidor
 ownerId=tu_id_de_usuario
+
+CANAL_BIENVENIDAS=id_del_canal_de_bienvenidas
+CANAL_SALIDAS=id_del_canal_de_salidas
 ```
 
 3. Ejecuta el bot:
