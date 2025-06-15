@@ -8,6 +8,7 @@ Un bot de Discord profesional que combina funcionalidades de moderación, sistem
 - 🎁 **Sistema de premios y economía**: incluye `giveaway`, `steal`, `premium`, `redeem` y `premiumcode`.
 - 🎫 **Sistema de Tickets**: gestión de soporte mediante comandos personalizados.
 - 🚨 **Sistema Anti-Raid**: detección y bloqueo automático de ataques en masa.
+- 👋 **Mensajes de Bienvenida y Salida**: sistema automático para recibir y despedir usuarios con mensajes personalizados.
 - 💌 **Modmail**: canal privado de comunicación entre miembros y staff.
 - 📦 **Sistema Premium**: funcionalidad exclusiva mediante códigos canjeables.
 - 📋 **Sistema de Logs Profesional**: seguimiento detallado de acciones administrativas.
@@ -57,3 +58,25 @@ npm start
 ## 🤝 Contribuciones
 
 ¿Tienes ideas, mejoras o encontraste un bug? ¡Los Pull Requests y Issues son bienvenidos!
+
+
+============================
+📦 Cambios - Versión 1.0.1
+============================
+
+✅ Cambios generales:
+- Todos los comandos, mensajes de logs y sistemas han sido traducidos al español. 🟩
+
+🛠️ Nuevos comandos de moderación:
+- Se ha agregado el comando `kick` para expulsar miembros del servidor. 🟩
+- Se ha agregado el comando `mute` para silenciar temporalmente a miembros. 🟩
+- Se ha agregado el comando `unmute` para retirar el silencio a miembros. 🟩
+
+📅 Fecha de lanzamiento: 15/06/2025
+
+============================
+🔖 Notas:
+- Asegúrate de tener permisos adecuados en el bot para usar estos comandos.
+- Si encuentras errores o necesitas ayuda, abre un issue en el repositorio.
+
+============================

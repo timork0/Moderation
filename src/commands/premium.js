@@ -5,61 +5,57 @@ const GuildPremium = require('../schemas/guildPremium.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('premium')
-        .setDescription('Manage premium access or check your own status.')
+        .setDescription('Gestiona el acceso premium o revisa tu propio estado.')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 
         .addSubcommand(subcommand =>
             subcommand
                 .setName('user-add')
-                .setDescription('Give a user premium access.')
+                .setDescription('Otorga acceso premium a un usuario')
                 .addStringOption(option =>
                     option.setName('user')
-                        .setDescription('User ID')
+                        .setDescription('ID del usuario')
                         .setRequired(true)
                 )
-                
         )
 
         .addSubcommand(subcommand =>
             subcommand
                 .setName('user-remove')
-                .setDescription('Remove premium access from a user.')
+                .setDescription('Remueve el acceso premium de un usuario')
                 .addStringOption(option =>
                     option.setName('user')
-                        .setDescription('User ID')
+                        .setDescription('ID del usuario')
                         .setRequired(true)
                 )
-                
         )
 
         .addSubcommand(subcommand =>
             subcommand
                 .setName('guild-add')
-                .setDescription('Give a guild premium access.')
+                .setDescription('Otorga acceso premium a un servidor')
                 .addStringOption(option =>
                     option.setName('guild')
-                        .setDescription('Guild ID')
+                        .setDescription('ID del servidor')
                         .setRequired(true)
                 )
-                
         )
 
         .addSubcommand(subcommand =>
             subcommand
                 .setName('guild-remove')
-                .setDescription('Remove premium access from a guild.')
+                .setDescription('Remueve el acceso premium de un servidor')
                 .addStringOption(option =>
                     option.setName('guild')
-                        .setDescription('Guild ID')
+                        .setDescription('ID del servidor')
                         .setRequired(true)
                 )
-                
         )
 
         .addSubcommand(subcommand =>
             subcommand
                 .setName('check')
-                .setDescription('Check if you have premium access.')
+                .setDescription('Revisa tu estado premium')
         ),
 
     async execute(interaction) {
@@ -76,14 +72,14 @@ module.exports = {
                 const existingUser = await UserPremium.findOne({ userID: userId });
                 if (existingUser) {
                     return interaction.reply({
-                        embeds: [errorEmbed.setDescription(`❌ The user <@${userId}> already has premium access.`)],
+                        embeds: [errorEmbed.setDescription(`🟥 El usuario <@${userId}> ya tiene acceso premium.`)],
                         flags: MessageFlags.Ephemeral
                     });
                 }
 
                 await UserPremium.create({ userID: userId });
                 return interaction.reply({
-                    embeds: [successEmbed.setDescription(`✅ Successfully added <@${userId}> to premium.`)],
+                    embeds: [successEmbed.setDescription(`🟩 Se ha otorgado acceso premium a <@${userId}> correctamente.`)],
                     flags: MessageFlags.Ephemeral
                 });
             }
@@ -92,14 +88,14 @@ module.exports = {
                 const existingUser = await UserPremium.findOne({ userID: userId });
                 if (!existingUser) {
                     return interaction.reply({
-                        embeds: [errorEmbed.setDescription(`❌ The user <@${userId}> does not have premium access.`)],
+                        embeds: [errorEmbed.setDescription(`🟥 El usuario <@${userId}> no tiene acceso premium.`)],
                         flags: MessageFlags.Ephemeral
                     });
                 }
 
                 await UserPremium.deleteOne({ userID: userId });
                 return interaction.reply({
-                    embeds: [successEmbed.setDescription(`✅ Successfully removed premium access from <@${userId}>.`)],
+                    embeds: [successEmbed.setDescription(`🟩 Se ha removido el acceso premium de <@${userId}> correctamente.`)],
                     flags: MessageFlags.Ephemeral
                 });
             }
@@ -108,14 +104,14 @@ module.exports = {
                 const existingGuild = await GuildPremium.findOne({ guildID: guildId });
                 if (existingGuild) {
                     return interaction.reply({
-                        embeds: [errorEmbed.setDescription(`❌ The guild with ID \`${guildId}\` already has premium access.`)],
+                        embeds: [errorEmbed.setDescription(`🟥 El servidor con ID ${guildId} ya tiene acceso premium.`)],
                         flags: MessageFlags.Ephemeral
                     });
                 }
 
                 await GuildPremium.create({ guildID: guildId });
                 return interaction.reply({
-                    embeds: [successEmbed.setDescription(`✅ Successfully added premium access to guild ID \`${guildId}\`.`)],
+                    embeds: [successEmbed.setDescription(`🟩 Acceso premium añadido correctamente al servidor con ID ${guildId}.`)],
                     flags: MessageFlags.Ephemeral
                 });
             }
@@ -124,14 +120,14 @@ module.exports = {
                 const existingGuild = await GuildPremium.findOne({ guildID: guildId });
                 if (!existingGuild) {
                     return interaction.reply({
-                        embeds: [errorEmbed.setDescription(`❌ The guild with ID \`${guildId}\` does not have premium access.`)],
+                        embeds: [errorEmbed.setDescription(`🟥 El servidor con ID ${guildId} no tiene acceso premium.`)],
                         flags: MessageFlags.Ephemeral
                     });
                 }
 
                 await GuildPremium.deleteOne({ guildID: guildId });
                 return interaction.reply({
-                    embeds: [successEmbed.setDescription(`✅ Successfully removed premium access from guild ID \`${guildId}\`.`)],
+                    embeds: [successEmbed.setDescription(`🟩 Acceso premium removido correctamente del servidor con ID ${guildId}.`)],
                     flags: MessageFlags.Ephemeral
                 });
             }
@@ -141,17 +137,17 @@ module.exports = {
                 const guildPremium = await GuildPremium.findOne({ guildID: interaction.guild.id });
 
                 const embed = new EmbedBuilder()
-                    .setTitle('Premium Status')
+                    .setTitle('Estado Premium')
                     .setTimestamp();
 
                 if (userPremium || guildPremium) {
                     embed
                         .setColor('Green')
-                        .setDescription('✅ You have premium access!');
+                        .setDescription('🟩 ¡Tienes acceso premium!');
                 } else {
                     embed
                         .setColor('Red')
-                        .setDescription('❌ You do not have premium access.');
+                        .setDescription('😣 No tienes acceso premium.');
                 }
 
                 return interaction.reply({ embeds: [embed], flags: MessageFlags.Ephemeral });

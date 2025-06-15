@@ -24,9 +24,9 @@ module.exports = {
 
         if (!welcomeStatus) {
           const welcomeEmbed = new EmbedBuilder()
-            .setTitle('Welcome')
+            .setTitle('Bienvenido')
             .setColor('Green')
-            .setDescription('Welcome to our Modmail system.\nIf you wish to contact our Team, please send in the next message your issue or send `cancel` to cancel the Modmail.')
+            .setDescription('Bienvenido a nuestro sistema de Modmail.\nSi deseas contactar a nuestro equipo, por favor envía en el siguiente mensaje tu problema o envía `cancelar` para cancelar el Modmail.')
             .setTimestamp();
 
           await message.channel.send({ embeds: [welcomeEmbed] });
@@ -41,7 +41,7 @@ module.exports = {
         }
 
         if (!modmailReason) {
-          if (UserMessage !== 'cancel') {
+          if (UserMessage !== 'cancelar') {
             await ModmailData.updateOne(
               { userId: userId },
               { $set: { issue: UserMessage } },
@@ -73,9 +73,9 @@ module.exports = {
             );
 
             const startEmbed = new EmbedBuilder()
-              .setTitle('Connected!')
+              .setTitle('¡Conectado!')
               .setColor('Green')
-              .setDescription('You are now connected to our staff.')
+              .setDescription('Ahora estás conectado con nuestro staff.')
               .setTimestamp();
 
             await message.channel.send({ embeds: [startEmbed] });
@@ -83,7 +83,7 @@ module.exports = {
             const infoEmbed = new EmbedBuilder()
               .setTitle('Modmail')
               .setAuthor({ name: message.author.tag, iconURL: message.author.avatarURL() })
-              .setDescription(`${message.author} (${message.author.tag}) needs our help!\n\nIssue: \`${UserMessage}\``)
+              .setDescription(`${message.author} (${message.author.tag}) necesita nuestra ayuda!\n\nProblema: \`${UserMessage}\``)
               .setColor('Green')
               .setTimestamp();
 
@@ -104,9 +104,9 @@ module.exports = {
             await ModmailData.deleteOne({ userId: userId });
 
             const cancelEmbed = new EmbedBuilder()
-              .setTitle('Cancel')
+              .setTitle('Cancelado')
               .setColor('Red')
-              .setDescription('You have canceled the modmail.');
+              .setDescription('Has cancelado el modmail.');
 
             await message.channel.send({ embeds: [cancelEmbed] });
           }
@@ -124,16 +124,16 @@ module.exports = {
             await userChannel.send({ embeds: [embedMessage] });
             await message.react('✅');
           } catch (err) {
-            console.log(`An error occurred while sending ${message.author.tag} modmail message.\nError:\n${err}`);
-            await message.channel.send('An error occurred while sending your message.');
+            console.log(`Ocurrió un error al enviar el mensaje de modmail de ${message.author.tag}.\nError:\n${err}`);
+            await message.channel.send('Ocurrió un error al enviar tu mensaje.');
             await message.react('❌');
           }
 
           return;
         }
       } catch (err) {
-        await message.channel.send('An error occurred, please try again later.');
-        console.log(`An error occurred while in chat with ${message.author.tag}\nError:\n${err}`);
+        await message.channel.send('Ocurrió un error, por favor intenta más tarde.');
+        console.log(`Ocurrió un error en el chat con ${message.author.tag}\nError:\n${err}`);
         return;
       }
     }
@@ -152,13 +152,13 @@ module.exports = {
         if (message.content === '!ping') {
           const wakeup = new EmbedBuilder()
             .setAuthor({ name: message.author.tag, iconURL: message.author.avatarURL() })
-            .setTitle('Wake up!')
-            .setDescription('Please respond in this modmail, or this modmail will be closed soon.')
+            .setTitle('¡Despierta!')
+            .setDescription('Por favor responde en este modmail, o este modmail será cerrado pronto.')
             .setColor('Red')
             .setTimestamp();
 
           await user.send({ embeds: [wakeup] });
-          wakeup.setDescription('The message was sent to the user!');
+          wakeup.setDescription('¡El mensaje fue enviado al usuario!');
           await message.reply({ embeds: [wakeup] });
           return;
         }
@@ -166,9 +166,9 @@ module.exports = {
         if (message.content === '!close') {
           const close = new EmbedBuilder()
             .setAuthor({ name: message.author.tag, iconURL: message.author.avatarURL() })
-            .setTitle('Close')
+            .setTitle('Cerrar')
             .setColor('Red')
-            .setDescription('The modmail is now closed. Delete the ticket with !delete')
+            .setDescription('El modmail ha sido cerrado. Elimina el ticket con !delete')
             .setTimestamp();
 
           await message.reply({ embeds: [close] });
@@ -178,8 +178,8 @@ module.exports = {
 
         if (message.content === '!delete') {
           const deleteEmbed = new EmbedBuilder()
-            .setTitle('Delete')
-            .setDescription('The ticket will be deleted in 5 seconds.')
+            .setTitle('Eliminar')
+            .setDescription('El ticket será eliminado en 5 segundos.')
             .setColor('Red')
             .setTimestamp();
 
@@ -187,7 +187,7 @@ module.exports = {
           await message.reply({ embeds: [deleteEmbed] });
 
           setTimeout(async () => {
-            deleteEmbed.setDescription('The ticket is now deleted.');
+            deleteEmbed.setDescription('El ticket ha sido eliminado.');
 
             await message.channel.delete();
             await ModmailData.deleteOne({ userId: user.id });
@@ -203,15 +203,15 @@ module.exports = {
             await user.send({ embeds: [embedMessage] });
             await message.react('✅');
           } catch (err) {
-            await message.reply('An error occurred, please try again later.');
+            await message.reply('Ocurrió un error, por favor intenta más tarde.');
             await message.react('❌');
-            console.log(`Error while sending modmail from ${message.author.tag} to ${user.tag}\n${err}`);
+            console.log(`Error al enviar modmail de ${message.author.tag} a ${user.tag}\n${err}`);
           }
         }
       }
     } catch (err) {
-      console.log(`An error occurred while handling modmail message from ${message.author.tag}\nError:\n${err}`);
-      await message.reply('An error occurred while sending your message.');
+      console.log(`Ocurrió un error al manejar el mensaje de modmail de ${message.author.tag}\nError:\n${err}`);
+      await message.reply('Ocurrió un error al enviar tu mensaje.');
       await message.react('❌');
     }
   }

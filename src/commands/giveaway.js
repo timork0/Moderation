@@ -1,18 +1,18 @@
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, ButtonStyle, PermissionFlagsBits, PermissionsBitField } = require('discord.js');
-const Giveaway = require('../schemas/giveaway'); // Update with the correct path
+const Giveaway = require('../schemas/giveaway'); // Actualiza con la ruta correcta
 const generateRandomCode = require('../utils/generateRandomCode');
  
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('giveaway')
-        .setDescription('Manage giveaways')
+        .setDescription('Gestiona sorteos')
         .addSubcommand(subcommand =>
             subcommand.setName('start')
-                .setDescription('Start a new giveaway')
-                .addStringOption(option => option.setName('duration').setDescription('Duration of the giveaway in minutes').setRequired(true))
-                .addStringOption(option => option.setName('prize').setDescription('Prize of the giveaway').setRequired(true))
-                .addIntegerOption(option => option.setName('winners').setDescription('Number of winners').setRequired(true))
-                .addChannelOption(option => option.setName('channel').setDescription('Channel to post the giveaway').setRequired(true))
+                .setDescription('Inicia un nuevo sorteo')
+                .addStringOption(option => option.setName('duration').setDescription('Duración del sorteo en minutos').setRequired(true))
+                .addStringOption(option => option.setName('prize').setDescription('Premio del sorteo').setRequired(true))
+                .addIntegerOption(option => option.setName('winners').setDescription('Número de ganadores').setRequired(true))
+                .addChannelOption(option => option.setName('channel').setDescription('Canal donde publicar el sorteo').setRequired(true))
         )
         .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator),
  
@@ -21,7 +21,7 @@ module.exports = {
  
         if (!interaction.member.permissions.has(PermissionFlagsBits.ModerateMembers)) {
             await interaction.reply({
-                content: "You are not allowed to execute this command. Missing Permission(s): ManageMembers",
+                content: "No tienes permiso para ejecutar este comando. Permiso faltante: ManageMembers",
                 ephemeral: true
             })
         } else {
@@ -30,7 +30,7 @@ module.exports = {
                     await startGiveaway(interaction, client);
                     break;
                 default:
-                    await interaction.reply({ content: 'Invalid subcommand', ephemeral: true });
+                    await interaction.reply({ content: 'Subcomando inválido', ephemeral: true });
             }
         }
     }
@@ -56,14 +56,14 @@ async function startGiveaway(interaction, client) {
         const code = generateRandomCode(10);
 
         const embed = new EmbedBuilder()
-            .setTitle("🎉 Giveaway 🎉")
-            .setDescription(`🎁 **Prize:** ${prize}\n⏰ **Ends in:** ${duration / 60000} minutes\n🏆 **Winners:** ${winnersCount}`)
+            .setTitle("🎉 Sorteo 🎉")
+            .setDescription(`🎁 **Premio:** ${prize}\n⏰ **Termina en:** ${duration / 60000} minutos\n🏆 **Ganadores:** ${winnersCount}`)
             .setFooter({ text: `ID: ${code}` })
             .setColor(0x00FFFF);
 
         const joinButton = new ButtonBuilder()
             .setCustomId(`giveaway-join-${code}`)
-            .setLabel('Join Giveaway')
+            .setLabel('Participar en el sorteo')
             .setStyle(ButtonStyle.Primary);
 
         const actionRow = new ActionRowBuilder().addComponents(joinButton);
@@ -82,15 +82,15 @@ async function startGiveaway(interaction, client) {
             ended: false
         });
 
-        await interaction.reply({ content: '🎉 ¡Giveaway iniciado con éxito!', ephemeral: true });
+        await interaction.reply({ content: '🎉 ¡Sorteo iniciado con éxito!', ephemeral: true });
     } catch (error) {
-        console.error('Error al iniciar el giveaway:', error);
-        await interaction.reply({ content: '❌ Ocurrió un error al iniciar el giveaway.', ephemeral: true });
+        console.error('Error al iniciar el sorteo:', error);
+        await interaction.reply({ content: '❌ Ocurrió un error al iniciar el sorteo.', ephemeral: true });
     }
 }
 
 function selectWinners(participants, count) {
-    // Shuffle array and pick 'count' winners
+    // Mezcla el array y selecciona 'count' ganadores
     let shuffled = participants.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
 }

@@ -6,7 +6,7 @@ module.exports = {
     .setName('ticket-setup')
     .setDescription('Configura el sistema de tickets en el servidor.')
     .addSubcommand(command => command.setName('send').setDescription('Envía el mensaje de creación de tickets.').addStringOption(option => option.setName('name').setDescription('Nombre de la categoría de tickets.').setRequired(true)).addStringOption(option => option.setName('message').setDescription('Mensaje de creación de tickets.').setRequired(false)))
-    .addSubcommand(command => command.setName('setup').setDescription('Coloca el sistema de tickets.').addChannelOption(option => option.setName('category').setDescription('Categoria donde se crearan los tickets.').addChannelTypes(ChannelType.GuildCategory).setRequired(true)))
+    .addSubcommand(command => command.setName('setup').setDescription('Coloca el sistema de tickets.').addChannelOption(option => option.setName('category').setDescription('Categoría donde se crearán los tickets.').addChannelTypes(ChannelType.GuildCategory).setRequired(true)))
     .addSubcommand(command => command.setName('remove').setDescription('Elimina el sistema de tickets.'))
     .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator),
     async execute (interaction) {
@@ -35,7 +35,7 @@ module.exports = {
                             },
                             {
                                 label: '🎫 Crear ticket 2',
-                                value: 'createTicket2',  // Cambié el valor para evitar duplicados
+                                value: 'createTicket2',
                                 description: 'Crea un ticket 2.'
                             }
                         )
@@ -63,7 +63,7 @@ module.exports = {
                 }
             break;
             case 'setup':
-                if (data) return interaction.reply({ content: `⚠️ Ya tienes un sistema de tickets habilitado! <#${data.Category}>`, flags: MessageFlags.Ephemeral });
+                if (data) return interaction.reply({ content: `⚠️ ¡Ya tienes un sistema de tickets habilitado! <#${data.Category}>`, flags: MessageFlags.Ephemeral });
                 else {
                     const category = options.getChannel('category');
                     await ticket.create({
@@ -71,7 +71,7 @@ module.exports = {
                         Category: category.id
                     });
 
-                    await interaction.reply({ content: `🍃 I have set category to **${category}**! Use /ticket send to send a ticket create message`, flags: MessageFlags.Ephemeral });
+                    await interaction.reply({ content: `🍃 ¡He establecido la categoría a **${category}**! Usa /ticket send para enviar un mensaje de creación de ticket`, flags: MessageFlags.Ephemeral });
                 }
         }
     }

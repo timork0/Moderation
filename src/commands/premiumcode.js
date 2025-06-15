@@ -5,19 +5,19 @@ const CodeSchema = require('../schemas/premiumcode');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('premiumcode')
-        .setDescription('Generate a premium user code.')
+        .setDescription('Genera un código de usuario premium.')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addStringOption(option =>
             option.setName('plan')
-                .setDescription('Select your plan.')
+                .setDescription('Selecciona tu plan.')
                 .setRequired(true)
                 .addChoices(
-                    { name: 'Minutely', value: 'minutely' },
-                    { name: 'Daily', value: 'daily' },
-                    { name: 'Weekly', value: 'weekly' },
-                    { name: 'Monthly', value: 'monthly' },
-                    { name: 'Yearly', value: 'yearly' },
-                    { name: 'Lifetime', value: 'lifetime' }
+                    { name: 'Minuto', value: 'minutely' },
+                    { name: 'Diario', value: 'daily' },
+                    { name: 'Semanal', value: 'weekly' },
+                    { name: 'Mensual', value: 'monthly' },
+                    { name: 'Anual', value: 'yearly' },
+                    { name: 'De por vida', value: 'lifetime' }
                 )
         ),
 
@@ -35,15 +35,15 @@ module.exports = {
             await CodeSchema.create({ code, plan });
         } else {
             return interaction.editReply({
-                content: `A conflict occurred. Please try generating the code again.`,
+                content: `Ocurrió un conflicto. Por favor, intenta generar el código nuevamente.`,
                 ephemeral: true
             });
         }
 
         const embed = new EmbedBuilder()
-            .setTitle('・Premium Codes')
-            .setDescription(`\`\`\`Generated Premium User Code:\n\n--------\n${code}\n--------\`\`\``)
-            .addFields({ name: `\`💠\` • Plan Type:`, value: `\`\`\`${plan}\`\`\``, inline: true })
+            .setTitle('・Códigos Premium')
+            .setDescription(`\`\`\`Código de usuario premium generado:\n\n--------\n${code}\n--------\`\`\``)
+            .addFields({ name: `\`💠\` • Tipo de plan:`, value: `\`\`\`${plan}\`\`\``, inline: true })
             .setColor('#FFD700')
             .setTimestamp();
 

@@ -1,56 +1,56 @@
 const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder } = require('discord.js');
 
-// Objeto en memoria para guardar warns
-const warns = {};
+// Objeto en memoria para guardar advertencias
+const advertencias = {};
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('warn')
-        .setDescription('🔨 Moderator / This warns a server member')
+        .setDescription('🔨 Moderador / Advierte a un miembro del servidor')
         .addUserOption(option =>
             option.setName('user')
-                .setDescription('The user you want to warn')
+                .setDescription('El usuario al que quieres advertir')
                 .setRequired(true)
         )
         .addStringOption(option =>
             option.setName('reason')
-                .setDescription('This is the reason for warning the user')
+                .setDescription('Esta es la razón de la advertencia')
                 .setRequired(false)
         )
         .setDefaultMemberPermissions(PermissionsBitField.Flags.ModerateMembers),
 
     async execute(interaction) {
         const { options, guildId, user } = interaction;
-        const target = options.getUser('user');
-        const reason = options.getString('reason') || "No reason given";
+        const objetivo = options.getUser('user');
+        const razon = options.getString('reason') || "Sin razón especificada";
 
         // Crear clave única por servidor y usuario
-        const key = `${guildId}-${target.id}`;
+        const clave = `${guildId}-${objetivo.id}`;
 
         // Si no existe, inicializar
-        if (!warns[key]) {
-            warns[key] = [];
+        if (!advertencias[clave]) {
+            advertencias[clave] = [];
         }
 
-        // Agregar warn
-        warns[key].push({
-            executerId: user.id,
-            executerTag: user.tag,
-            reason: reason,
-            date: new Date()
+        // Agregar advertencia
+        advertencias[clave].push({
+            ejecutorId: user.id,
+            ejecutorTag: user.tag,
+            razon: razon,
+            fecha: new Date()
         });
 
         // Embeds
         const embed = new EmbedBuilder()
             .setColor('Blurple')
-            .setDescription(`😣 You have been **warned** in ${interaction.guild.name} | ${reason}`);
+            .setDescription(`😣 Has sido **advertido** en ${interaction.guild.name} | ${razon}`);
 
         const embed2 = new EmbedBuilder()
             .setColor('Blurple')
-            .setDescription(`🔨 ${target.tag} has been **warned** | ${reason}`);
+            .setDescription(`🔨 ${objetivo.tag} ha sido **advertido** | ${razon}`);
 
         // Enviar DMs
-        target.send({ embeds: [embed] }).catch(() => {});
+        objetivo.send({ embeds: [embed] }).catch(() => {});
 
         // Responder en el canal
         interaction.reply({ embeds: [embed2] });

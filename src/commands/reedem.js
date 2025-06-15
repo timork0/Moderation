@@ -6,31 +6,31 @@ const soycanvas = require('soycanvas');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('redeem')
-        .setDescription('Redeem your Premium Code.')
+        .setName('canjear')
+        .setDescription('Canjea tu código Premium.')
         .addStringOption(option =>
-            option.setName('code')
-                .setDescription('Introduce your Premium Code.')
+            option.setName('codigo')
+                .setDescription('Introduce tu código Premium.')
                 .setRequired(true)
         ),
 
     async execute(interaction) {
         await interaction.deferReply({ ephemeral: true });
 
-        const input = interaction.options.getString('code').toUpperCase();
+        const input = interaction.options.getString('codigo').toUpperCase();
         const user = await User.findOne({ Id: interaction.user.id });
         const code = await Code.findOne({ code: input });
         const premiumID = soycanvas.Util.captchaKey(12);
 
         if (user?.isPremium) {
             return interaction.editReply({
-                embeds: [new EmbedBuilder().setColor('#ff0000').setDescription(`\`❌\` | You are already a premium user.`)]
+                embeds: [new EmbedBuilder().setColor('#ff0000').setDescription(`\`❌\` | Ya eres un usuario premium.`)]
             });
         }
 
         if (!code) {
             return interaction.editReply({
-                embeds: [new EmbedBuilder().setColor('#800080').setDescription(`\`❌\` | The provided code was invalid. Please try again.`)]
+                embeds: [new EmbedBuilder().setColor('#800080').setDescription(`\`❌\` | El código proporcionado no es válido. Inténtalo de nuevo.`)]
             });
         }
 
@@ -66,20 +66,20 @@ module.exports = {
         
 
         const time = await User.findOne({ Id: interaction.user.id });
-        const expires = time.expiresAt ? moment(time.expiresAt).format('dddd, MMMM Do YYYY HH:mm:ss') : 'Never';
+        const expires = time.expiresAt ? moment(time.expiresAt).format('dddd, MMMM Do YYYY HH:mm:ss') : 'Nunca';
 
         const embed = new EmbedBuilder()
-            .setAuthor({ name: 'Premium Redeemed!', iconURL: interaction.client.user.displayAvatarURL() })
-            .setDescription(`Congratulations ${interaction.member}, you've successfully redeemed your premium code.`)
+            .setAuthor({ name: '¡Premium Canjeado!', iconURL: interaction.client.user.displayAvatarURL() })
+            .setDescription(`Felicidades ${interaction.member}, has canjeado tu código premium exitosamente.`)
             .setThumbnail(interaction.user.displayAvatarURL())
             .setColor('#800080')
             .setTimestamp();
 
         embed.addFields([
-            { name: `\`👥\` • Redeemed By`, value: `\`\`\`${interaction.member.displayName}\`\`\``, inline: true },
-            { name: `\`💠\` • Plan Type`, value: `\`\`\`${time.plan}\`\`\``, inline: true },
-            { name: `\`🕓\` • Expired Time`, value: `\`\`\`${expires}\`\`\``, inline: false },
-            { name: `\`🆔\` • Premium ID`, value: `\`\`\`${time.PremID}\`\`\``, inline: false }
+            { name: `\`👥\` • Canjeado por`, value: `\`\`\`${interaction.member.displayName}\`\`\``, inline: true },
+            { name: `\`💠\` • Tipo de Plan`, value: `\`\`\`${time.plan}\`\`\``, inline: true },
+            { name: `\`🕓\` • Fecha de Expiración`, value: `\`\`\`${expires}\`\`\``, inline: false },
+            { name: `\`🆔\` • ID Premium`, value: `\`\`\`${time.PremID}\`\`\``, inline: false }
         ]);
 
         return interaction.editReply({ embeds: [embed] });

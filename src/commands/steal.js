@@ -3,10 +3,10 @@ const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ActionRowBuilder, Moda
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('steal')
-        .setDescription('Steal an emoji.')
+        .setDescription('Roba un emoji.')
         .addStringOption(option =>
             option.setName('item')
-                .setDescription('Provide an emoji')
+                .setDescription('Proporciona un emoji')
                 .setRequired(true)
         )
         .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator),
@@ -21,7 +21,7 @@ module.exports = {
                     new EmbedBuilder()
                         .setColor('#97bcbf')
                         .addFields(
-                            { name: '<:cross2:1345422141251784785> Invalid Input', value: 'Please provide a valid emoji.' }
+                            { name: '<:cross2:1345422141251784785> Entrada inválida', value: 'Por favor proporciona un emoji válido.' }
                         )
                 ],
                 ephemeral: true
@@ -37,7 +37,7 @@ module.exports = {
 
         const addButton = new ButtonBuilder()
             .setCustomId('add_emoji')
-            .setLabel('Add Emoji to Server')
+            .setLabel('Agregar emoji al servidor')
             .setStyle('Primary');
 
         const row = new ActionRowBuilder().addComponents(addButton);
@@ -52,13 +52,13 @@ module.exports = {
         collector.on('collect', async i => {
             const modal = new ModalBuilder()
                 .setCustomId('emoji_modal')
-                .setTitle('Set Emoji Name');
+                .setTitle('Establecer nombre del emoji');
 
             const nameInput = new TextInputBuilder()
                 .setCustomId('emoji_name')
-                .setLabel('Enter the name for the emoji:')
+                .setLabel('Ingresa el nombre para el emoji:')
                 .setStyle(TextInputStyle.Short)
-                .setPlaceholder('Example: WackMoji')
+                .setPlaceholder('Ejemplo: WackMoji')
                 .setRequired(true);
 
             const modalRow = new ActionRowBuilder().addComponents(nameInput);
@@ -72,7 +72,7 @@ module.exports = {
                 const expiredEmbed = new EmbedBuilder()
                     .setColor('#ff4242')
                     .addFields(
-                        { name: '<:cross2:1345422141251784785> Request Expired', value: 'The button has expired. Please run the command again.' }
+                        { name: '<:cross2:1345422141251784785> Solicitud expirada', value: 'El botón ha expirado. Por favor ejecuta el comando de nuevo.' }
                     );
 
                 await msg.edit({ embeds: [expiredEmbed], components: [] });
@@ -96,7 +96,7 @@ module.exports = {
                             new EmbedBuilder()
                                 .setColor('#97bcbf')
                                 .addFields(
-                                    { name: '<:green_tick:1345422039091118100> Emoji Added', value: `Successfully added \`${emojiName}\` to the server.` }
+                                    { name: '<:green_tick:1345422039091118100> Emoji agregado', value: `Se agregó correctamente \`${emojiName}\` al servidor.` }
                                 )
                         ]
                     });
@@ -106,7 +106,7 @@ module.exports = {
                             new EmbedBuilder()
                                 .setColor('#97bcbf')
                                 .addFields(
-                                    { name: '<:cross2:1345422141251784785> Failed to Add', value: `Error: ${error.message}` }
+                                    { name: '<:cross2:1345422141251784785> Error al agregar', value: `Error: ${error.message}` }
                                 )
                         ],
                         ephemeral: true
