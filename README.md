@@ -62,10 +62,7 @@ npm start
 
 ¿Tienes ideas, mejoras o encontraste un bug? ¡Los Pull Requests y Issues son bienvenidos!
 
-
-============================
-📦 Cambios - Versión 1.0.1
-============================
+## 📦 Cambios - Versión 1.0.1
 
 ✅ Cambios generales:
 - Todos los comandos, mensajes de logs y sistemas han sido traducidos al español. 🟩
@@ -77,9 +74,6 @@ npm start
 
 📅 Fecha de lanzamiento: 15/06/2025
 
-============================
-🔖 Notas:
+## 🔖 Notas:
 - Asegúrate de tener permisos adecuados en el bot para usar estos comandos.
 - Si encuentras errores o necesitas ayuda, abre un issue en el repositorio.
-
-============================
